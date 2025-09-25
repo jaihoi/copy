@@ -168,15 +168,16 @@ function App() {
             transform: `translateY(${scrollY * 0.5}px)`
           }}
         >
-          <div className="absolute top-20 left-10 w-64 h-64 bg-primary/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 left-10 w-64 h-64 bg-primary/20 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float-delayed"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-accent/10 rounded-full blur-2xl animate-pulse"></div>
         </div>
         
         <div className="container px-4 relative z-10">
           <div className="text-center space-y-6 animate-fade-in">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
               Crafting the Future of{' '}
-              <span className="gradient-text animate-bounce-in">Influence</span>
+              <span className="gradient-text-enhanced animate-bounce-in">Influence</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto animate-slide-up">
               Connecting brands with creators to design unforgettable campaigns that inspire, 
@@ -186,7 +187,7 @@ function App() {
               <Button 
                 size="lg" 
                 onClick={navigateToServices}
-                className="bg-primary hover:bg-primary/90 hover-glow"
+                className="bg-primary hover:bg-primary/90 hover-glow animate-shimmer"
               >
                 Explore Services
                 <ArrowRight className="ml-2 w-4 h-4" />
@@ -195,7 +196,7 @@ function App() {
                 size="lg" 
                 variant="outline"
                 onClick={openContactDialog}
-                className="hover-glow"
+                className="hover-glow border-primary/50 text-primary hover:bg-primary/10"
               >
                 Get Started
               </Button>
@@ -204,7 +205,7 @@ function App() {
         </div>
       </section>
 
-      {/* Brands Carousel - Continuous Scrolling */}
+      {/* Brands Carousel - Continuous Scrolling Left to Right */}
       <section className="py-16 bg-muted/50 overflow-hidden">
         <div className="container px-4">
           <div className="text-center mb-12 animate-fade-in">
@@ -217,9 +218,9 @@ function App() {
           </div>
           
           <div className="relative">
-            <div className="flex space-x-8 animate-scroll scroll-brands">
-              {[...Array(12)].map((_, i) => (
-                <div key={i} className="flex-shrink-0 h-16 w-32 bg-muted rounded-lg flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity">
+            <div className="flex space-x-8 animate-scroll-continuous scroll-brands-rtl">
+              {[...Array(20)].map((_, i) => (
+                <div key={i} className="flex-shrink-0 h-16 w-32 bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-105 hover-glow">
                   <span className="text-sm font-medium text-muted-foreground">Brand {(i % 6) + 1}</span>
                 </div>
               ))}
@@ -228,24 +229,24 @@ function App() {
         </div>
       </section>
 
-      {/* What We Do - Animated Content */}
+      {/* What We Do - Enhanced Animations */}
       <section className="py-20">
         <div className="container px-4">
-          <div className="text-center mb-16 animate-fade-in">
+          <div className="text-center mb-16 animate-slide-left">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">What We Do</h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto animate-slide-left-delayed">
               We collaborate with influencers and authentic brands to create meaningful partnerships 
               that drive real results and build lasting relationships.
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="text-center p-6 animate-slide-left hover-glow">
+            <Card className="text-center p-6 animate-slide-right hover-glow group transition-all duration-500">
               <CardHeader>
-                <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Handshake className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                  <Handshake className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <CardTitle>Brand Partnerships</CardTitle>
+                <CardTitle className="group-hover:text-primary transition-colors duration-300">Brand Partnerships</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -254,12 +255,12 @@ function App() {
               </CardContent>
             </Card>
             
-            <Card className="text-center p-6 animate-slide-up hover-glow">
+            <Card className="text-center p-6 animate-slide-right-delayed hover-glow group transition-all duration-500">
               <CardHeader>
-                <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Target className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                  <Target className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <CardTitle>Strategic Campaigns</CardTitle>
+                <CardTitle className="group-hover:text-primary transition-colors duration-300">Strategic Campaigns</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -268,12 +269,12 @@ function App() {
               </CardContent>
             </Card>
             
-            <Card className="text-center p-6 animate-slide-right hover-glow">
+            <Card className="text-center p-6 animate-slide-right-more-delayed hover-glow group transition-all duration-500">
               <CardHeader>
-                <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Crown className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+                  <Crown className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <CardTitle>Creator Growth</CardTitle>
+                <CardTitle className="group-hover:text-primary transition-colors duration-300">Creator Growth</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">

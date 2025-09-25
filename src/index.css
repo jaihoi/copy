@@ -74,7 +74,7 @@
   --radius-full: 9999px;
 }
 
-/* Gradient text effect */
+/* Enhanced gradient text effect with animation */
 .gradient-text {
   background: linear-gradient(135deg, 
     oklch(0.65 0.15 180) 0%,
@@ -85,7 +85,20 @@
   background-clip: text;
 }
 
-/* Animation classes */
+.gradient-text-enhanced {
+  background: linear-gradient(135deg, 
+    oklch(0.65 0.15 180) 0%,
+    oklch(0.35 0.12 240) 30%,
+    oklch(0.45 0.10 260) 60%,
+    oklch(0.65 0.15 180) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease-in-out infinite;
+}
+
+/* Enhanced animation classes */
 .animate-fade-in {
   animation: fadeIn 1s ease-out;
 }
@@ -94,8 +107,20 @@
   animation: slideInLeft 0.8s ease-out;
 }
 
+.animate-slide-left-delayed {
+  animation: slideInLeft 0.8s ease-out 0.2s both;
+}
+
 .animate-slide-right {
   animation: slideInRight 0.8s ease-out;
+}
+
+.animate-slide-right-delayed {
+  animation: slideInRight 0.8s ease-out 0.3s both;
+}
+
+.animate-slide-right-more-delayed {
+  animation: slideInRight 0.8s ease-out 0.6s both;
 }
 
 .animate-slide-up {
@@ -106,9 +131,25 @@
   animation: bounceIn 0.8s ease-out;
 }
 
-/* Scrolling animation for brands */
-.scroll-brands {
-  animation: scrollLeft 30s linear infinite;
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 6s ease-in-out infinite 3s;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Enhanced scrolling animations */
+.scroll-brands-rtl {
+  animation: scrollRightToLeft 25s linear infinite;
+}
+
+.animate-scroll-continuous {
+  animation: scrollContinuous 30s linear infinite;
 }
 
 @keyframes fadeIn {
@@ -170,6 +211,51 @@
   }
 }
 
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes scrollRightToLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes scrollContinuous {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 @keyframes scrollLeft {
   0% {
     transform: translateX(0);
@@ -188,18 +274,70 @@
   }
 }
 
+@keyframes carouselScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
 .animate-scroll {
   animation: scroll 20s linear infinite;
 }
 
-/* Hover effects */
+.animate-carousel-scroll {
+  animation: carouselScroll 40s linear infinite;
+}
+
+/* Enhanced hover effects */
 .hover-glow:hover {
-  box-shadow: 0 10px 25px oklch(0.65 0.15 180 / 0.3);
+  box-shadow: 0 10px 25px oklch(0.65 0.15 180 / 0.3), 0 0 0 1px oklch(0.65 0.15 180 / 0.1);
   transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+.hover-glow {
   transition: all 0.3s ease;
 }
 
 /* Parallax effect */
 .parallax {
   transform: translateY(var(--parallax-offset, 0));
+}
+
+/* Enhanced button shimmer effect */
+.animate-shimmer {
+  background: linear-gradient(
+    45deg,
+    oklch(0.65 0.15 180) 0%,
+    oklch(0.75 0.15 180) 50%,
+    oklch(0.65 0.15 180) 100%
+  );
+  background-size: 200% 200%;
+}
+
+.animate-shimmer:hover {
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Framer-motion-like transitions */
+.group {
+  --transform-duration: 300ms;
+  --transform-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced card interactions */
+.animate-slide-right:hover,
+.animate-slide-right-delayed:hover,
+.animate-slide-right-more-delayed:hover {
+  transform: translateY(-4px) scale(1.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Floating animation for background elements */
+.animate-float,
+.animate-float-delayed {
+  will-change: transform;
 }
