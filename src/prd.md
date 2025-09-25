@@ -1,42 +1,56 @@
-# Social Riser - Influencer Marketing Agency Website
+# Social Riser - Influencer Marketing Agency Website (Updated)
 
 ## Core Purpose & Success
-- **Mission Statement**: A modern influencer marketing agency website that connects brands with creators through authentic partnerships and comprehensive talent management services.
-- **Success Indicators**: High engagement on contact forms, clear value proposition communication, professional brand presentation, and effective lead generation for both influencers and brands.
-- **Experience Qualities**: Professional, Dynamic, Trustworthy
+- **Mission Statement**: A fully animated, modern influencer marketing agency website that connects brands with creators through authentic partnerships and comprehensive talent management services.
+- **Success Indicators**: High engagement on contact forms, clear value proposition communication, professional brand presentation, effective lead generation, and enhanced user experience through meaningful animations.
+- **Experience Qualities**: Professional, Dynamic, Trustworthy, Engaging
 
 ## Project Classification & Approach
-- **Complexity Level**: Light Application (multiple features with basic state)
-- **Primary User Activity**: Consuming information and Acting (contact forms, service inquiries)
+- **Complexity Level**: Complex Application (advanced functionality, multiple pages, animated content)
+- **Primary User Activity**: Consuming, Acting, and Interacting through animated experiences
 
 ## Thought Process for Feature Selection
-- **Core Problem Analysis**: Bridging the gap between talented creators and forward-thinking brands through strategic partnerships
-- **User Context**: Brands seeking authentic influencer partnerships and creators looking for growth opportunities
-- **Critical Path**: Homepage → Service understanding → Contact/Collaboration
-- **Key Moments**: Hero impression, service value proposition, contact form submission
+- **Core Problem Analysis**: Bridging the gap between talented creators and forward-thinking brands through strategic partnerships with engaging user experiences
+- **User Context**: Brands seeking authentic influencer partnerships and creators looking for growth opportunities, with emphasis on visual engagement
+- **Critical Path**: Homepage → Animated service understanding → Contact/Collaboration through popups
+- **Key Moments**: Hero impression with gradient animation, continuous brand carousel, animated service presentation, popup contact form
 
 ## Essential Features
 
-### Homepage
-- Hero section with "Crafting the Future of Influence" messaging
-- Brand carousel showcase
-- Service overview with clear value propositions
-- Contact form integration
+### Homepage (Fully Animated)
+- Hero section with gradient animated "Crafting the Future of Influence" messaging
+- Continuous left-to-right scrolling brand carousel
+- Animated "What We Do" section with directional content animations
+- About section with mixed left-to-right and right-to-left content animations
+- Parallax background effects
+- Popup contact dialog triggered by "Collaborate" button
 
-### About Us
-- Comprehensive mission and vision statement
-- Focus on growth ecosystem and authentic storytelling
-- Professional positioning as more than just an agency
+### Separate Services Page
+- Complete dedicated page with animated content
+- Three interactive tabs/sections:
+  1. **Influencers**: Left-to-right content animation with image carousel
+  2. **Talent Management**: Right-to-left content with image carousel  
+  3. **Brand Associations**: Mixed animations with image carousel
+- Continuous image carousels for each service section
+- Professional service presentation with animated transitions
 
-### Services
-- **For Influencers**: Partnership building, brand alignment, financial growth
-- **Talent Management**: End-to-end creator support, career building, professional management
-- **Influencer Marketing**: Data-driven campaigns for brands, authentic connections
+### Enhanced About Section
+- Mixed directional animations (left-to-right and right-to-left)
+- Parallax scrolling effects
+- Gradient text animations for key messaging
+- Staggered content reveals
 
-### Contact
-- Multi-channel contact form (Name, Email, Social Media links, Description)
-- Direct email integration to contact@socialriser.com
-- Professional inquiry handling
+### Contact Integration
+- Popup dialog instead of traditional page section
+- Triggered by "Collaborate" button throughout the site
+- Animated entrance effects
+- Streamlined form experience
+
+### Footer Enhancement
+- Added Terms & Conditions page
+- Added Privacy Policy page
+- Both with animated content and professional legal information
+- Smooth navigation between pages
 
 ## Design Direction
 
@@ -76,10 +90,24 @@
 - **Responsive Approach**: Mobile-first design with progressive enhancement
 - **Content Density**: Balanced information presentation without overwhelming users
 
-### Animations
-- **Purposeful Meaning**: Subtle animations to convey growth and movement
-- **Hierarchy of Movement**: Hero elements, service cards, contact interactions
-- **Contextual Appropriateness**: Professional subtle animations that enhance UX
+### Animations (Enhanced)
+- **Purposeful Meaning**: Every animation conveys brand personality of growth, innovation, and professional excellence
+- **Hierarchy of Movement**: 
+  1. Hero elements with gradient text animation and parallax backgrounds
+  2. Continuous brand carousel scrolling
+  3. Directional content animations (left-to-right, right-to-left)
+  4. Card hover effects with glow
+  5. Popup dialog animations
+  6. Page transition effects
+- **Contextual Appropriateness**: Professional animations that enhance engagement without being distracting
+- **Animation Types Implemented**:
+  - Fade-in effects for initial content
+  - Slide animations (left, right, up) for content reveals
+  - Bounce-in effects for emphasis
+  - Continuous scrolling for brand carousel
+  - Parallax effects for depth
+  - Hover glow effects for interactivity
+  - Popup dialog animations for contact forms
 
 ### UI Elements & Component Selection
 - **Component Usage**: Cards for services, forms for contact, navigation header, hero sections
