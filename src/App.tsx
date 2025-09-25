@@ -357,7 +357,7 @@ export default function App() {
             </div>
             <button 
               onClick={() => setCurrentPage('home')}
-              className="text-xl font-bold gradient-text hover:scale-105 transition-transform"
+              className="text-xl font-bold gradient-text hover:scale-105 transition-transform cursor-pointer"
             >
               Social Riser
             </button>
@@ -369,14 +369,14 @@ export default function App() {
               <button
                 key={item}
                 onClick={() => scrollToSection(item.toLowerCase())}
-                className="text-sm font-medium transition-colors hover:text-primary"
+                className="text-sm font-medium transition-colors hover:text-primary cursor-pointer"
               >
                 {item}
               </button>
             ))}
             <button
               onClick={navigateToServices}
-              className="text-sm font-medium transition-colors hover:text-primary"
+              className="text-sm font-medium transition-colors hover:text-primary cursor-pointer"
             >
               Services
             </button>
@@ -393,7 +393,7 @@ export default function App() {
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden"
+            className="md:hidden cursor-pointer"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X size={24} /> : <List size={24} />}
@@ -408,14 +408,14 @@ export default function App() {
                 <button
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase())}
-                  className="block w-full text-left text-sm font-medium transition-colors hover:text-primary"
+                  className="block w-full text-left text-sm font-medium transition-colors hover:text-primary cursor-pointer"
                 >
                   {item}
                 </button>
               ))}
               <button
                 onClick={navigateToServices}
-                className="block w-full text-left text-sm font-medium transition-colors hover:text-primary"
+                className="block w-full text-left text-sm font-medium transition-colors hover:text-primary cursor-pointer"
               >
                 Services
               </button>
@@ -490,7 +490,7 @@ export default function App() {
           <div className="relative">
             <div className="flex space-x-8 animate-scroll-continuous scroll-brands-rtl">
               {[...Array(20)].map((_, i) => (
-                <div key={i} className="flex-shrink-0 h-16 w-32 bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-105 hover-glow">
+                <div key={i} className="flex-shrink-0 h-16 w-32 bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-105 hover-glow cursor-pointer">
                   <span className="text-sm font-medium text-muted-foreground">{brands[i % brands.length]}</span>
                 </div>
               ))}
@@ -641,13 +641,13 @@ export default function App() {
             </p>
             
             <div className="flex justify-center space-x-6 mb-8">
-              <button className="text-muted-foreground hover:text-primary transition-colors hover-glow">
+              <button className="text-muted-foreground hover:text-primary transition-colors hover-glow cursor-pointer">
                 <InstagramLogo size={24} />
               </button>
-              <button className="text-muted-foreground hover:text-primary transition-colors hover-glow">
+              <button className="text-muted-foreground hover:text-primary transition-colors hover-glow cursor-pointer">
                 <FacebookLogo size={24} />
               </button>
-              <button className="text-muted-foreground hover:text-primary transition-colors hover-glow">
+              <button className="text-muted-foreground hover:text-primary transition-colors hover-glow cursor-pointer">
                 <EnvelopeSimple size={24} />
               </button>
             </div>
@@ -655,14 +655,14 @@ export default function App() {
             <div className="flex justify-center space-x-6 text-sm text-muted-foreground">
               <button 
                 onClick={navigateToTerms}
-                className="hover:text-primary transition-colors"
+                className="hover:text-primary transition-colors cursor-pointer"
               >
                 Terms & Conditions
               </button>
               <span>•</span>
               <button 
                 onClick={navigateToPrivacy}
-                className="hover:text-primary transition-colors"
+                className="hover:text-primary transition-colors cursor-pointer"
               >
                 Privacy Policy
               </button>

@@ -265,3 +265,17 @@
 .animate-float-delayed {
   will-change: transform;
 }
+
+/* Cursor pointer for clickable elements */
+button,
+[role="button"],
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Ensure interactive elements have pointer cursor on hover */
+button:hover,
+[role="button"]:hover,
+.hover\:cursor-pointer:hover {
+  cursor: pointer;
+}
