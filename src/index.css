@@ -1,4 +1,4 @@
-/* Enhanced gradient text effect with animation */
+/* Optimized gradient text effects */
 .gradient-text {
   background: linear-gradient(135deg, 
     oklch(0.65 0.15 180) 0%,
@@ -7,6 +7,9 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  /* Enable hardware acceleration */
+  will-change: auto;
+  transform: translateZ(0);
 }
 
 .gradient-text-enhanced {
@@ -20,127 +23,168 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   animation: gradient-shift 3s ease-in-out infinite;
+  /* Performance optimizations */
+  will-change: background-position;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-/* Enhanced animation classes */
+/* Optimized animation classes with performance improvements */
 .animate-fade-in {
-  animation: fadeIn 1s ease-out;
+  animation: fadeIn 1s ease-out both;
+  /* Hardware acceleration for smooth performance */
+  will-change: opacity, transform;
+  transform: translateZ(0);
 }
 
 .animate-slide-left {
-  animation: slideInLeft 0.8s ease-out;
+  animation: slideInLeft 0.8s ease-out both;
+  will-change: opacity, transform;
+  transform: translateZ(0);
 }
 
 .animate-slide-left-delayed {
   animation: slideInLeft 0.8s ease-out 0.2s both;
+  will-change: opacity, transform;
+  transform: translateZ(0);
 }
 
 .animate-slide-right {
-  animation: slideInRight 0.8s ease-out;
+  animation: slideInRight 0.8s ease-out both;
+  will-change: opacity, transform;
+  transform: translateZ(0);
 }
 
 .animate-slide-right-delayed {
   animation: slideInRight 0.8s ease-out 0.3s both;
+  will-change: opacity, transform;
+  transform: translateZ(0);
 }
 
 .animate-slide-right-more-delayed {
   animation: slideInRight 0.8s ease-out 0.6s both;
+  will-change: opacity, transform;
+  transform: translateZ(0);
 }
 
 .animate-slide-up {
-  animation: slideInUp 0.6s ease-out;
+  animation: slideInUp 0.6s ease-out both;
+  will-change: opacity, transform;
+  transform: translateZ(0);
 }
 
 .animate-bounce-in {
-  animation: bounceIn 0.8s ease-out;
+  animation: bounceIn 0.8s ease-out both;
+  will-change: opacity, transform;
+  transform: translateZ(0);
 }
 
+/* Optimized floating animations for background elements */
 .animate-float {
   animation: float 6s ease-in-out infinite;
+  /* Optimize for smooth performance */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .animate-float-delayed {
   animation: float 6s ease-in-out infinite 3s;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .animate-shimmer {
   animation: shimmer 2s ease-in-out infinite;
+  will-change: background-position;
+  transform: translateZ(0);
 }
 
-/* Enhanced scrolling animations */
+/* Highly optimized scrolling animations for continuous movement */
 .scroll-brands-rtl {
-  animation: scrollRightToLeft 25s linear infinite;
+  animation: scrollContinuousRTL 30s linear infinite;
+  /* Critical performance optimizations for continuous scrolling */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style paint;
 }
 
 .animate-scroll-continuous {
   animation: scrollContinuous 30s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  contain: layout style paint;
 }
 
+/* Optimized keyframe animations with hardware acceleration */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translate3d(0, 20px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes slideInLeft {
   from {
     opacity: 0;
-    transform: translateX(-50px);
+    transform: translate3d(-50px, 0, 0);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes slideInRight {
   from {
     opacity: 0;
-    transform: translateX(50px);
+    transform: translate3d(50px, 0, 0);
   }
   to {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes slideInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translate3d(0, 30px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes bounceIn {
   0% {
     opacity: 0;
-    transform: scale(0.8);
+    transform: scale3d(0.8, 0.8, 1);
   }
   60% {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale3d(1.05, 1.05, 1);
   }
   100% {
     opacity: 1;
-    transform: scale(1);
+    transform: scale3d(1, 1, 1);
   }
 }
 
 @keyframes float {
   0%, 100% {
-    transform: translateY(0px);
+    transform: translate3d(0, 0, 0);
   }
   50% {
-    transform: translateY(-20px);
+    transform: translate3d(0, -20px, 0);
   }
 }
 
@@ -162,76 +206,95 @@
   }
 }
 
-@keyframes scrollRightToLeft {
+/* High-performance continuous scrolling animations */
+@keyframes scrollContinuousRTL {
   0% {
-    transform: translateX(100%);
+    transform: translate3d(100%, 0, 0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translate3d(-100%, 0, 0);
   }
 }
 
 @keyframes scrollContinuous {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Legacy scroll animations - kept for compatibility */
+@keyframes scrollRightToLeft {
+  0% {
+    transform: translate3d(100%, 0, 0);
+  }
+  100% {
+    transform: translate3d(-100%, 0, 0);
   }
 }
 
 @keyframes scrollLeft {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translate3d(-100%, 0, 0);
   }
 }
 
 @keyframes scroll {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 @keyframes carouselScroll {
   0% {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-33.333%);
+    transform: translate3d(-33.333%, 0, 0);
   }
 }
 
+/* Performance-optimized animation classes */
 .animate-scroll {
   animation: scroll 20s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
 .animate-carousel-scroll {
   animation: carouselScroll 40s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+  contain: layout style paint;
 }
 
-/* Enhanced hover effects */
+/* Enhanced hover effects with performance optimization */
+.hover-glow {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+}
+
 .hover-glow:hover {
   box-shadow: 0 10px 25px oklch(0.65 0.15 180 / 0.3), 0 0 0 1px oklch(0.65 0.15 180 / 0.1);
-  transform: translateY(-2px);
-  transition: all 0.3s ease;
+  transform: translate3d(0, -2px, 0);
 }
 
-.hover-glow {
-  transition: all 0.3s ease;
-}
-
-/* Parallax effect */
+/* Optimized parallax effect with better performance */
 .parallax {
-  transform: translateY(var(--parallax-offset, 0));
+  transform: translate3d(0, var(--parallax-offset, 0), 0);
+  will-change: transform;
 }
 
-/* Enhanced button shimmer effect */
+/* Enhanced button shimmer effect with performance optimizations */
 .animate-shimmer {
   background: linear-gradient(
     45deg,
@@ -240,42 +303,107 @@
     oklch(0.65 0.15 180) 100%
   );
   background-size: 200% 200%;
+  will-change: background-position;
+  transform: translateZ(0);
 }
 
 .animate-shimmer:hover {
   animation: shimmer 1.5s ease-in-out infinite;
 }
 
-/* Framer-motion-like transitions */
+/* Optimized motion settings for better performance */
 .group {
   --transform-duration: 300ms;
   --transform-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Enhanced card interactions */
+/* Enhanced card interactions with hardware acceleration */
 .animate-slide-right:hover,
 .animate-slide-right-delayed:hover,
 .animate-slide-right-more-delayed:hover {
-  transform: translateY(-4px) scale(1.02);
+  transform: translate3d(0, -4px, 0) scale(1.02);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Floating animation for background elements */
-.animate-float,
-.animate-float-delayed {
   will-change: transform;
 }
 
-/* Cursor pointer for clickable elements */
+/* Performance-optimized cursor styles */
 button,
 [role="button"],
 .cursor-pointer {
   cursor: pointer;
 }
 
-/* Ensure interactive elements have pointer cursor on hover */
 button:hover,
 [role="button"]:hover,
 .hover\:cursor-pointer:hover {
   cursor: pointer;
+}
+
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-float,
+  .animate-float-delayed,
+  .scroll-brands-rtl,
+  .animate-scroll-continuous {
+    animation: none;
+  }
+}
+
+/* Performance optimizations for scrolling containers */
+.scroll-container {
+  overflow: hidden;
+  contain: layout style paint;
+}
+
+.scroll-content {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Intersection Observer based animation trigger */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* GPU acceleration for all animated elements */
+.animate-fade-in,
+.animate-slide-left,
+.animate-slide-right,
+.animate-slide-up,
+.animate-bounce-in,
+.gradient-text-enhanced,
+.animate-float,
+.animate-float-delayed,
+.scroll-brands-rtl,
+.animate-scroll-continuous {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .gradient-text,
+  .gradient-text-enhanced {
+    -webkit-text-fill-color: unset;
+    background-clip: unset;
+    -webkit-background-clip: unset;
+    color: var(--foreground);
+  }
 }

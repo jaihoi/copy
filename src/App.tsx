@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
@@ -23,13 +23,13 @@ import {
 import { toast } from 'sonner'
 import { motion, AnimatePresence } from 'framer-motion'
 
-// Mock brands data
-const brands = [
+// Performance optimization: Memoized constants to prevent re-creation
+const BRANDS = [
   'Nike', 'Apple', 'Samsung', 'Google', 'Microsoft', 'Tesla',
   'Netflix', 'Spotify', 'Adobe', 'Amazon', 'Meta', 'Twitter'
 ]
 
-const services = [
+const SERVICES = [
   {
     id: 'influencers',
     title: 'For Influencers: Rise Above the Noise',
@@ -69,11 +69,45 @@ const services = [
   }
 ]
 
+// Performance monitoring utilities
+const usePerformanceMonitor = () => {
+  const frameCount = useRef(0)
+  const lastTime = useRef(performance.now())
+  
+  useEffect(() => {
+    const monitorFrame = () => {
+      frameCount.current++
+      const currentTime = performance.now()
+      
+      // Log performance every 60 frames (roughly 1 second at 60fps)
+      if (frameCount.current % 60 === 0) {
+        const fps = 1000 / ((currentTime - lastTime.current) / 60)
+        if (fps < 50) {
+          console.warn(`Low FPS detected: ${fps.toFixed(1)} fps`)
+        }
+        lastTime.current = currentTime
+        frameCount.current = 0
+      }
+      
+      requestAnimationFrame(monitorFrame)
+    }
+    
+    if (process.env.NODE_ENV === 'development') {
+      requestAnimationFrame(monitorFrame)
+    }
+  }, [])
+}
+
 export default function App() {
+  // Initialize performance monitoring in development
+  usePerformanceMonitor()
+  
   const [currentPage, setCurrentPage] = useState('home')
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [contactDialogOpen, setContactDialogOpen] = useState(false)
   const [scrollY, setScrollY] = useState(0)
+  const scrollRef = useRef<number>(0)
+  const rafRef = useRef<number | undefined>(undefined)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -82,11 +116,32 @@ export default function App() {
     description: ''
   })
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+  // Optimized scroll handler using requestAnimationFrame for better performance
+  const handleScroll = useCallback(() => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current)
+    }
+    
+    rafRef.current = requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY
+      // Only update if scroll difference is significant to reduce renders
+      if (Math.abs(currentScrollY - scrollRef.current) > 5) {
+        scrollRef.current = currentScrollY
+        setScrollY(currentScrollY)
+      }
+    })
   }, [])
+
+  useEffect(() => {
+    // Use passive listener for better scroll performance
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current)
+      }
+    }
+  }, [handleScroll])
 
   useEffect(() => {
     if (currentPage !== 'home') {
@@ -94,36 +149,86 @@ export default function App() {
     }
   }, [currentPage])
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  // Memoized handlers to prevent re-creation
+  const handleFormSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault()
     toast.success('Thank you! We\'ll get back to you soon.')
     setContactDialogOpen(false)
     setFormData({ name: '', email: '', instagram: '', facebook: '', description: '' })
-  }
+  }, [])
 
-  const navigateToServices = () => {
+  const navigateToServices = useCallback(() => {
     setCurrentPage('services')
-  }
+  }, [])
 
-  const navigateToTerms = () => {
+  const navigateToTerms = useCallback(() => {
     setCurrentPage('terms')
-  }
+  }, [])
 
-  const navigateToPrivacy = () => {
+  const navigateToPrivacy = useCallback(() => {
     setCurrentPage('privacy')
-  }
+  }, [])
 
-  const openContactDialog = () => {
+  const openContactDialog = useCallback(() => {
     setContactDialogOpen(true)
-  }
+  }, [])
 
-  const scrollToSection = (sectionId: string) => {
+  // Memoized card data to prevent re-creation
+  const cardData = useMemo(() => [
+    {
+      icon: Handshake,
+      title: 'Brand Partnerships',
+      description: 'Connecting the right creators with brands that align with their values and audience.',
+      delay: 0
+    },
+    {
+      icon: Target,
+      title: 'Strategic Campaigns',
+      description: 'Data-driven marketing strategies that deliver measurable results and authentic engagement.',
+      delay: 0.3
+    },
+    {
+      icon: Crown,
+      title: 'Creator Growth',
+      description: 'Empowering creators to build sustainable careers through professional management and guidance.',
+      delay: 0.6
+    }
+  ], [])
+
+  // Memoized card component for better performance
+  const ServiceCard = useMemo(() => ({ icon: Icon, title, description, delay }: {
+    icon: any,
+    title: string,
+    description: string,
+    delay: number
+  }) => (
+    <Card 
+      className={`text-center p-6 hover-glow group transition-all duration-500 ${
+        delay === 0 ? 'animate-slide-right' : 
+        delay === 0.3 ? 'animate-slide-right-delayed' : 
+        'animate-slide-right-more-delayed'
+      }`}
+      style={{ willChange: 'transform' }}
+    >
+      <CardHeader>
+        <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
+          <Icon className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300" />
+        </div>
+        <CardTitle className="group-hover:text-primary transition-colors duration-300">{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground">{description}</p>
+      </CardContent>
+    </Card>
+  ), [])
+
+  const scrollToSection = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
     }
     setMobileMenuOpen(false)
-  }
+  }, [])
 
   // Services Page Component
   const ServicesPage = () => (
@@ -144,7 +249,7 @@ export default function App() {
         </motion.div>
 
         <div className="space-y-20">
-          {services.map((service, index) => (
+          {SERVICES.map((service, index) => (
             <motion.div
               key={service.id}
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
@@ -430,13 +535,15 @@ export default function App() {
         )}
       </header>
 
-      {/* Home Section */}
+      {/* Optimized Home Section with improved parallax */}
       <section id="home" className="py-20 lg:py-32 relative overflow-hidden">
+        {/* Optimized parallax background with better performance */}
         <div 
-          className="absolute inset-0 opacity-10"
+          className="absolute inset-0 opacity-10 parallax"
           style={{
-            transform: `translateY(${scrollY * 0.5}px)`
-          }}
+            '--parallax-offset': `${scrollY * 0.3}px`,
+            willChange: 'transform'
+          } as React.CSSProperties}
         >
           <div className="absolute top-20 left-10 w-64 h-64 bg-primary/20 rounded-full blur-3xl animate-float"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl animate-float-delayed"></div>
@@ -475,8 +582,8 @@ export default function App() {
         </div>
       </section>
 
-      {/* Brands Carousel - Continuous Scrolling Left to Right */}
-      <section className="py-16 bg-muted/50 overflow-hidden">
+      {/* Optimized Brands Carousel - Continuous Scrolling */}
+      <section className="py-16 bg-muted/50 overflow-hidden scroll-container">
         <div className="container px-4">
           <div className="text-center mb-12 animate-fade-in">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
@@ -488,10 +595,18 @@ export default function App() {
           </div>
           
           <div className="relative">
-            <div className="flex space-x-8 animate-scroll-continuous scroll-brands-rtl">
-              {[...Array(20)].map((_, i) => (
-                <div key={i} className="flex-shrink-0 h-16 w-32 bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center opacity-60 hover:opacity-100 transition-all duration-300 hover:scale-105 hover-glow cursor-pointer">
-                  <span className="text-sm font-medium text-muted-foreground">{brands[i % brands.length]}</span>
+            {/* Optimized scrolling with CSS containment for better performance */}
+            <div className="flex space-x-8 scroll-brands-rtl scroll-content">
+              {/* Create enough duplicates for seamless infinite scroll */}
+              {[...Array(24)].map((_, i) => (
+                <div 
+                  key={i} 
+                  className="flex-shrink-0 h-16 w-32 bg-gradient-to-br from-muted to-muted/50 rounded-lg flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity duration-300 hover:scale-105 hover-glow cursor-pointer"
+                  style={{ willChange: 'opacity, transform' }}
+                >
+                  <span className="text-sm font-medium text-muted-foreground">
+                    {BRANDS[i % BRANDS.length]}
+                  </span>
                 </div>
               ))}
             </div>
@@ -499,7 +614,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* What We Do - Enhanced Animations */}
+      {/* Optimized What We Do section with memoized components */}
       <section className="py-20">
         <div className="container px-4">
           <div className="text-center mb-16 animate-slide-left">
@@ -511,47 +626,15 @@ export default function App() {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="text-center p-6 animate-slide-right hover-glow group transition-all duration-500">
-              <CardHeader>
-                <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
-                  <Handshake className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300" />
-                </div>
-                <CardTitle className="group-hover:text-primary transition-colors duration-300">Brand Partnerships</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Connecting the right creators with brands that align with their values and audience.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center p-6 animate-slide-right-delayed hover-glow group transition-all duration-500">
-              <CardHeader>
-                <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
-                  <Target className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300" />
-                </div>
-                <CardTitle className="group-hover:text-primary transition-colors duration-300">Strategic Campaigns</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Data-driven marketing strategies that deliver measurable results and authentic engagement.
-                </p>
-              </CardContent>
-            </Card>
-            
-            <Card className="text-center p-6 animate-slide-right-more-delayed hover-glow group transition-all duration-500">
-              <CardHeader>
-                <div className="w-12 h-12 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors duration-300">
-                  <Crown className="w-6 h-6 text-primary group-hover:scale-110 transition-transform duration-300" />
-                </div>
-                <CardTitle className="group-hover:text-primary transition-colors duration-300">Creator Growth</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  Empowering creators to build sustainable careers through professional management and guidance.
-                </p>
-              </CardContent>
-            </Card>
+            {cardData.map(({ icon, title, description, delay }, index) => (
+              <ServiceCard
+                key={`${title}-${index}`}
+                icon={icon}
+                title={title}
+                description={description}
+                delay={delay}
+              />
+            ))}
           </div>
         </div>
       </section>
